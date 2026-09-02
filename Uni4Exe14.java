@@ -26,7 +26,7 @@ public class Uni4Exe14 {
                 valido = true;
             }
 
-            if (valido = true) {
+            if (valido == true) {
                 System.out.println("É válido");
             } else {
                 System.out.println("Não é valido");
