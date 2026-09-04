@@ -29,16 +29,6 @@ public class Atv27 {
             hora++;
         }
 
-
-
-
-
-        
-        
-        
-        
-        
-        
         if (hora == 1 || hora == 2) {
             valor = hora * 5;
             System.out.println("Preço cobrado = R$"+ valor);
