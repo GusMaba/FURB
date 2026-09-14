@@ -5,26 +5,25 @@ public class Main1047 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        int HoraIni, HoraFim, MinIni, MinFim, Hora, Minuto;
+        int horaIni = sc.nextInt();
+        int minIni = sc.nextInt();
+        int horaFim = sc.nextInt();
+        int minFim = sc.nextInt();
 
-        HoraIni = sc.nextInt();
-        MinIni = sc.nextInt();
-        HoraFim = sc.nextInt();
-        MinFim = sc.nextInt();
+        int inicio = horaIni * 60 + minIni;
+        int fim = horaFim * 60 + minFim;
 
-        Hora = HoraFim - HoraIni;
-        Minuto = MinFim - MinIni;
+        int duracao;
 
-        if (Minuto < 0) {
-            Hora--;
-            Minuto += 60;
-            
-        }
-
-        if (Hora == 0 && Minuto == 0) {
-            System.out.println("O JOGO DUROU 24 HORA(S) E 0 MINUTO(S)");
+        if (fim > inicio) {
+            duracao = fim - inicio;
         } else {
-            System.out.println("O JOGO DUROU " + Hora + " HORA(S) E " + Minuto + " MINUTO(S)");
+            duracao = (fim + 24 * 60) - inicio;
         }
+
+        int hora = duracao / 60;
+        int minuto = duracao % 60;
+
+        System.out.println("O JOGO DUROU " + hora + " HORA(S) E " + minuto + " MINUTO(S)");
     }
 }
