@@ -2,21 +2,27 @@ import java.util.Scanner;
 
 public class Uni5Exe13 {
     public static void main(String[] args) {
-        Scanner teclado = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 
-        int n = teclado.nextInt();
+        System.out.print("Digite o número total de abastecimentos: ");
+        int n = sc.nextInt();
 
         double totalKm = 0;
         double totalLitros = 0;
 
         for (int i = 1; i <= n; i++) {
-            double quilometragem = teclado.nextDouble();
-            double combustivel = teclado.nextDouble();
+
+            System.out.print("Digite a quilometragem da parada: ");
+            double quilometragem = sc.nextDouble();
+
+            System.out.print("Digite a quantidade de combustível abastecida: ");
+            double combustivel = sc.nextDouble();
 
             double kmPorLitro = quilometragem / combustivel;
 
-            System.out.println(
-                "Parada " + i + ": " + kmPorLitro + " km por litro"
+            System.out.printf(
+                    "Parada %d: %.1f km por litro%n",
+                    i, kmPorLitro
             );
 
             totalKm += quilometragem;
@@ -25,10 +31,11 @@ public class Uni5Exe13 {
 
         double media = totalKm / totalLitros;
 
-        System.out.println(
-            "Quilometragem média obtida por litro: " + media
+        System.out.printf(
+                "Quilometragem média obtida por litro: %.2f%n",
+                media
         );
 
-        teclado.close();
+        sc.close();
     }
 }
