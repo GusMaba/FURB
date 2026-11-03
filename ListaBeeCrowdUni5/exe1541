@@ -1,1 +1,27 @@
+import java.util.Scanner;
 
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        while (true) {
+            int A = sc.nextInt();
+
+            if (A == 0) {
+                break;
+            }
+
+            int B = sc.nextInt();
+            int C = sc.nextInt();
+
+            double area = A * B;
+            double terreno = (area * 100) / C;
+
+            int lado = (int) Math.sqrt(terreno);
+
+            System.out.println(lado);
+        }
+
+        sc.close();
+    }
+}
