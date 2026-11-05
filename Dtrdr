@@ -1,0 +1,328 @@
+### Resolução da prova – Introdução à Programação
+
+Vou resolver as três questões, explicando os cálculos e apresentando o algoritmo e o código Java da questão 3.
+
+### Questão 1 – Verdadeiro ou falso
+
+| Item | Resposta       | Justificativa                                                                                           |
+| ---- | -------------- | ------------------------------------------------------------------------------------------------------- |
+| a)   | 1 – Verdadeiro | Subprogramas dividem uma solução em partes menores e específicas.                                       |
+| b)   | 0 – Falso      | Uma função pode retornar um valor sem necessariamente receber parâmetros.                               |
+| c)   | 1 – Verdadeiro | Um subprograma pode receber vários parâmetros de tipos diferentes.                                      |
+| d)   | 0 – Falso      | A execução do programa principal fica pausada temporariamente e continua após o retorno do subprograma. |
+| e)   | 1 – Verdadeiro | Um subprograma pode chamar outro subprograma durante sua execução.                                      |
+
+Gabarito: a) 1 — b) 0 — c) 1 — d) 0 — e) 1.
+
+### Questão 2 – Análise do algoritmo
+
+Primeiro, precisamos entender as funções:
+
+Função calcular(a, b):
+
+* Se `a > b`, retorna `a - b`.
+
+* Caso contrário, retorna `a + b`.
+
+Função processar(num):
+
+* Executa `calcular(num, 5)`.
+
+* Multiplica o resultado por 2.
+
+### a) O que faz a função calcular?
+
+Compara dois números inteiros:
+
+* Se o primeiro for maior que o segundo, retorna a subtração entre eles.
+
+* Caso contrário, retorna a soma dos dois.
+
+### b) Valores finais de y e z para x = 3
+
+Primeiro:
+
+`y = processar(3)`
+
+* calcular(3, 5)
+
+* Como 3 não é maior que 5: 3 + 5 = 8.
+
+* 8 × 2 = 16.
+
+Portanto, `y = 16`.
+
+Agora:
+
+`z = calcular(3, 16)`
+
+\- Como 3 não é maior que 16: 3 + 16 = 19.
+
+Resposta
+
+* y = 16
+
+* z = 19
+
+### c) Valores finais de y e z para x = 6
+
+Primeiro:
+
+`y = processar(6)`
+
+* calcular(6, 5)
+
+* Como 6 é maior que 5: 6 - 5 = 1.
+
+* 1 × 2 = 2.
+
+Portanto, `y = 2`.
+
+Agora:
+
+`z = calcular(6, 2)`
+
+\- Como 6 é maior que 2: 6 - 2 = 4.
+
+Resposta
+
+* y = 2
+
+* z = 4
+
+### Questão 3 – Algoritmo e implementação em Java
+
+A questão pede um programa que leia códigos alfanuméricos até que o usuário pressione Enter sem digitar nada.
+
+Para cada código, devemos:
+
+* Contar quantas letras existem.
+
+* Inverter o código.
+
+* Ao inverter, aumentar cada número em uma unidade (9 vira 0).
+
+* Verificar se o código possui pelo menos duas letras e dois números.
+
+* Ao final, mostrar a quantidade de códigos analisados e o percentual de códigos válidos.
+
+### A) Algoritmo (pseudocódigo)
+
+```text
+Função contarLetras(codigo): inteiro
+Inicio
+    contador <- 0
+
+    Para cada caractere de codigo faça
+        Se caractere for uma letra então
+            contador <- contador + 1
+        FimSe
+    FimPara
+
+    Retorne contador
+FimFunção
+
+Função inverter(codigo): texto
+Inicio
+    resultado <- ""
+
+    Para i de tamanho(codigo)-1 até 0 faça
+        caractere <- codigo[i]
+
+        Se caractere for um número então
+            Se caractere = '9' então
+                caractere <- '0'
+            Senao
+                caractere <- caractere + 1
+            FimSe
+        FimSe
+
+        resultado <- resultado + caractere
+    FimPara
+
+    Retorne resultado
+FimFunção
+
+Função validar(codigo): lógico
+Inicio
+    letras <- contar letras do código
+    numeros <- contar números do código
+
+    Retorne (letras >= 2 E numeros >= 2)
+FimFunção
+
+Algoritmo Principal
+Inicio
+    total <- 0
+    validos <- 0
+
+    Leia codigo
+
+    Enquanto codigo <> "" faça
+
+        total <- total + 1
+
+        Escreva contarLetras(codigo)
+        Escreva inverter(codigo)
+
+        Se validar(codigo) então
+            Escreva "Código válido"
+            validos <- validos + 1
+        Senao
+            Escreva "Código inválido"
+        FimSe
+
+        Leia codigo
+    FimEnquanto
+
+    Escreva total
+    Escreva (validos / total) * 100
+Fim
+```
+
+### B) Implementação em Java
+
+Código completo
+
+```java
+import java.util.Scanner;
+
+public class Main {
+
+    // Conta a quantidade de letras
+    public static int contarLetras(String codigo) {
+        int contador = 0;
+
+        for (int i = 0; i < codigo.length(); i++) {
+            if (Character.isLetter(codigo.charAt(i))) {
+                contador++;
+            }
+        }
+
+        return contador;
+    }
+
+    // Inverte o código e aumenta os números
+    public static String inverter(String codigo) {
+        String resultado = "";
+
+        for (int i = codigo.length() - 1; i >= 0; i--) {
+
+            char caractere = codigo.charAt(i);
+
+            if (Character.isDigit(caractere)) {
+                if (caractere == '9') {
+                    caractere = '0';
+                } else {
+                    caractere++;
+                }
+            }
+
+            resultado += caractere;
+        }
+
+        return resultado;
+    }
+
+    // Verifica se o código é válido
+    public static boolean validar(String codigo) {
+        int letras = 0;
+        int numeros = 0;
+
+        for (int i = 0; i < codigo.length(); i++) {
+
+            char caractere = codigo.charAt(i);
+
+            if (Character.isLetter(caractere)) {
+                letras++;
+            }
+
+            if (Character.isDigit(caractere)) {
+                numeros++;
+            }
+        }
+
+        return letras >= 2 && numeros >= 2;
+    }
+
+    // Programa principal
+    public static void main(String[] args) {
+
+        Scanner entrada = new Scanner(System.in);
+
+        int total = 0;
+        int validos = 0;
+
+        String codigo;
+
+        System.out.print("Entrada: ");
+        codigo = entrada.nextLine();
+
+        while (!codigo.isEmpty()) {
+
+            total++;
+
+            System.out.println("Saídas");
+
+            System.out.println(
+                "Quantidade de letras: " + contarLetras(codigo)
+            );
+
+            System.out.println(
+                "Código invertido: " + inverter(codigo)
+            );
+
+            if (validar(codigo)) {
+                System.out.println("Código válido");
+                validos++;
+            } else {
+                System.out.println("Código inválido");
+            }
+
+            System.out.print("\nEntrada: ");
+            codigo = entrada.nextLine();
+        }
+
+        System.out.println("\nSaída Final");
+
+        System.out.println(
+            "Quantidade de códigos analisados: " + total
+        );
+
+        double percentual = 0;
+
+        if (total > 0) {
+            percentual = (validos * 100.0) / total;
+        }
+
+        System.out.println(
+            "Percentual de códigos válidos: " + percentual + "%"
+        );
+
+        entrada.close();
+    }
+}
+```
+
+### C) Conferindo com os exemplos da prova
+
+| Entrada | Letras | Código invertido | Validade |
+| ------- | ------ | ---------------- | -------- |
+| A1B2    | 2      | 3B2A             | Válido   |
+| AB1     | 2      | 2BA              | Inválido |
+| A123    | 1      | 432A             | Inválido |
+| 12AB    | 2      | BA32             | Válido   |
+| X9      | 1      | 0X               | Inválido |
+| 99ZZ    | 2      | ZZ00             | Válido   |
+
+Resultado final:
+
+* Quantidade de códigos analisados: 6
+
+* Códigos válidos: 3
+
+* Percentual de códigos válidos: 50%
+
+Observação importante: Na implementação Java, toda a leitura e apresentação dos resultados ficam dentro do `main`, enquanto as funções auxiliares apenas processam os códigos, conforme exigido pelo enunciado.
+
+Se quiser estudar antes de uma avaliação semelhante, posso também explicar o código Java linha por linha, especialmente os métodos, os `for`, o `while` e o uso de `String`.
