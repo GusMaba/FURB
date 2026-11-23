@@ -1,0 +1,56 @@
+import java.util.Scanner;
+
+public class TrabalhoFinalArqueologiaMaba {
+
+    private static void colocarElementos(int[] mapa, int valor, int quantidade) {
+    int colocados = 0;
+    while (colocados < quantidade) {
+        int posicao = (int) (Math.random() * mapa.length);
+        if (mapa[posicao] == 0) {
+            mapa[posicao] = valor;
+            colocados++;
+        }
+    }
+}
+
+    private static void gerarMapa(int[] mapa) {
+        colocarElementos(mapa, 1, 6); 
+        colocarElementos(mapa, 2, 4); 
+        colocarElementos(mapa, 3, 8); 
+        
+        }
+    
+
+    private static void mostrarMapa(int[] mapa) {
+        System.out.println("Mapa da expedição:");
+        for (int i = 0; i < mapa.length; i++) {
+            System.out.print(mapa[i] + " ");
+        }
+        System.out.println();
+    }
+        
+    
+
+    public static void main(String[] args) {
+        Scanner tec = new Scanner(System.in);
+        int opcao = 0;
+
+        while (opcao != 2) {
+            System.out.println("1 - Iniciar expedição");
+            System.out.println("2 - Encerrar jogo");
+            opcao = tec.nextInt();
+
+            switch (opcao) {
+                case 1:
+                    System.out.println("Expedição iniciada!");
+                    int[] mapa = new int[30];
+                    gerarMapa(mapa);
+                    mostrarMapa(mapa);
+                    break;
+                case 2:
+                    System.out.println("Jogo encerrado!");
+                    break;
+            }
+        }
+    }
+}
