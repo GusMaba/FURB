@@ -13,15 +13,15 @@ public class TrabalhoFinalArqueologiaMaba {
     static int totalArtefatos = 0;
 
     private static boolean verificarFim() {
-    if (energia <= 0 || artefatos >= 4 || exploracoes >= 12) {
-        return true;
-    } else {
-        return false;
+        if (energia <= 0 || artefatos >= 4 || exploracoes >= 12) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
-}
-
- private static void mostrarResultado() {
+    private static void mostrarResultado() {
         if (energia <= 0) {
             System.out.println("Você perdeu! Sua energia acabou.");
             derrotas++;
@@ -39,9 +39,7 @@ public class TrabalhoFinalArqueologiaMaba {
         System.out.println("Vitórias: " + vitorias);
         System.out.println("Derrotas: " + derrotas);
         System.out.println("Total de artefatos encontrados: " + totalArtefatos);
-    } 
-        
-        
+    }
 
     private static void alterarEnergia(int quantidade) {
         energia += quantidade;
@@ -139,22 +137,21 @@ public class TrabalhoFinalArqueologiaMaba {
                     mostrarMapa(mapa);
                     inicializarPartida();
                     while (!verificarFim()) {
-                        
+
                         System.out.println("Escolha uma posição para explorar (0 a 29):");
                         int posicao = tec.nextInt();
                         if (posicao < 0 || posicao >= mapa.length) {
                             System.out.println("Posição inválida! Tente novamente.");
                             continue;
                         }
-                        
                         explorarPosicao(mapa, posicao);
                         mostrarMapa(mapa);
-                        System.out.println("Energia: " + energia);
-                        System.out.println("Artefatos: " + artefatos);
-                        System.out.println("Explorações: " + exploracoes);
                     }
                     System.out.println("Fim da expedição!");
                     mostrarResultado();
+                    System.out.println("Energia: " + energia);
+                    System.out.println("Artefatos: " + artefatos);
+                    System.out.println("Explorações: " + exploracoes);
                     break;
                 case 2:
                     System.out.println("Jogo encerrado!");
