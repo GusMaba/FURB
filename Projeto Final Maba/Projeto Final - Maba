@@ -1,164 +1,49 @@
-import java.util.Scanner;
-
-public class TrabalhoFinalArqueologiaMaba {
-
-    // Dados da partida
-    static int energia = 20;
-    static int artefatos = 0;
-    static int exploracoes = 0;
-
-    // Dados gerais
-    static int vitorias = 0;
-    static int derrotas = 0;
-    static int totalArtefatos = 0;
-
-    private static boolean verificarFim() {
-    if (energia <= 0 || artefatos >= 4 || exploracoes >= 12) {
-        return true;
-    } else {
-        return false;
-    }
-
-}
-
- private static void mostrarResultado() {
-        if (energia <= 0) {
-            System.out.println("Você perdeu! Sua energia acabou.");
-            derrotas++;
-        } else if (artefatos >= 4) {
-            System.out.println("Parabéns! Você encontrou todos os artefatos!");
-            vitorias++;
-        } else if (exploracoes >= 12) {
-            System.out.println("Você perdeu! Você não encontrou todos os artefatos.");
-            derrotas++;
-        }
-    }
-
-    private static void mostrarEstatisticas() {
-        System.out.println("Estatísticas do jogo:");
-        System.out.println("Vitórias: " + vitorias);
-        System.out.println("Derrotas: " + derrotas);
-        System.out.println("Total de artefatos encontrados: " + totalArtefatos);
-    } 
-        
-        
-
-    private static void alterarEnergia(int quantidade) {
-        energia += quantidade;
-        if (energia > 30) {
-            energia = 30;
-        }
-    }
-
-    private static void explorarPosicao(int[] mapa, int posicao) {
-        if (posicaoJaExplorada(mapa, posicao)) {
-            System.out.println("Posição já explorada!");
-            return;
-        }
-
-        switch (mapa[posicao]) {
-
-            case 1:
-                System.out.println("Você encontrou uma fonte de energia! Ganhou 5 de energia.");
-                alterarEnergia(5);
-                break;
-            case 2:
-                System.out.println("Você encontrou um artefato!");
-                artefatos++;
-                totalArtefatos++;
-                break;
-            case 3:
-                System.out.println("Você encontrou uma área de risco! Perdeu 4 de energia.");
-                alterarEnergia(-4);
-                break;
-            default:
-                System.out.println("Nada encontrado nesta posição.");
-                alterarEnergia(-1);
-                break;
-        }
-        mapa[posicao] = -1;
-        exploracoes++;
-    }
-
-    private static void inicializarPartida() {
-        energia = 20;
-        artefatos = 0;
-        exploracoes = 0;
-    }
-
-    private static boolean posicaoJaExplorada(int[] mapa, int posicao) {
-        if (mapa[posicao] == -1) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private static void colocarElementos(int[] mapa, int valor, int quantidade) {
-        int colocados = 0;
-        while (colocados < quantidade) {
-            int posicao = (int) (Math.random() * mapa.length);
-            if (mapa[posicao] == 0) {
-                mapa[posicao] = valor;
-                colocados++;
-            }
-        }
-    }
-
-    private static void gerarMapa(int[] mapa) {
-        colocarElementos(mapa, 1, 6);
-        colocarElementos(mapa, 2, 4);
-        colocarElementos(mapa, 3, 8);
-
-    }
-
-    private static void mostrarMapa(int[] mapa) {
-        System.out.println("Mapa da expedição:");
-        for (int i = 0; i < mapa.length; i++) {
-            System.out.print(mapa[i] + " ");
-        }
-        System.out.println();
-    }
-
-    public static void main(String[] args) {
-        Scanner tec = new Scanner(System.in);
-        int opcao = 0;
-
-        while (opcao != 2) {
-            System.out.println("1 - Iniciar expedição");
-            System.out.println("2 - Encerrar jogo");
-            opcao = tec.nextInt();
-
-            switch (opcao) {
-                case 1:
-                    System.out.println("Expedição iniciada!");
-                    int[] mapa = new int[30];
-                    gerarMapa(mapa);
-                    mostrarMapa(mapa);
-                    inicializarPartida();
-                    while (!verificarFim()) {
-                        
-                        System.out.println("Escolha uma posição para explorar (0 a 29):");
-                        int posicao = tec.nextInt();
-                        if (posicao < 0 || posicao >= mapa.length) {
-                            System.out.println("Posição inválida! Tente novamente.");
-                            continue;
-                        }
-                        
-                        explorarPosicao(mapa, posicao);
-                        mostrarMapa(mapa);
-                        System.out.println("Energia: " + energia);
-                        System.out.println("Artefatos: " + artefatos);
-                        System.out.println("Explorações: " + exploracoes);
-                    }
-                    System.out.println("Fim da expedição!");
-                    mostrarResultado();
-                    break;
-                case 2:
-                    System.out.println("Jogo encerrado!");
-                    mostrarEstatisticas();
-                    break;
-            }
-        }
-    }
-}
+PROJETO 1 – EXPEDIÇÃO ARQUEOLÓGICA
+Em uma expedição arqueológica, um pesquisador deverá explorar diferentes pontos de uma região para encontrar artefatos históricos. Para representar a região, será utilizado um vetor de 30 posições, numeradas de 0 a 29.
+Cada posição poderá conter um dos seguintes elementos:
+•	0: terreno sem ocorrência;
+•	1: fonte de energia;
+•	2: artefato arqueológico;
+•	3: área de risco;
+•	-1: posição já explorada
+O mapa deverá ser gerado automaticamente pelo programa e conter exatamente:
+•	6 fontes de energia;
+•	4 artefatos arqueológicos;
+•	8 áreas de risco;
+•	12 posições sem ocorrência.
+A distribuição dos elementos deverá ser aleatória, sem sobreposição. Para gerar uma posição aleatória, utilize:
+int posicao = (int)(Math.random() * 30);
+O pesquisador inicia cada partida com 20 unidades de energia e deverá encontrar os 4 artefatos para vencer a expedição.
+O programa deverá apresentar continuamente o seguinte menu:
+1 – Iniciar expedição
+2 - Encerrar jogo
+Na Opção 1 – Iniciar expedição, deverá ser iniciada uma partida, gerando o mapa com os elementos alocados. Em seguida, o jogador deverá informar a posição que deseja explorar, informando um número de 0 a 29. Cada posição poderá ser explorada apenas uma vez durante a partida. Caso escolha uma posição já explorada, o programa deverá informar a situação e solicitar outra posição. O número de explorações é limitado a 12 a cada expedição. Entretanto, tentativas de selecionar posições já exploradas não serão contabilizadas como exploração.
+A cada exploração, inicialmente deve ser verificada se a posição já foi explorada ou não. Em seguida, deverá ser aplicado o efeito correspondente ao elemento encontrado na posição:
+•	Terreno sem ocorrência: informar que nada foi encontrado e descontar uma unidade de energia;
+•	Fonte de energia: acrescentar 5 unidades de energia ao saldo do jogador. Caso a energia ultrapasse 30 pontos, ela deve ser ajustada para esse limite;
+•	Artefato arqueológico: informar que um artefato foi encontrado e acrescentar um ao total de artefatos coletados.
+•	Área de risco: informar a ocorrência e retirar 4 unidades de energia do saldo do jogador.
+Após a exploração, deve ser atribuído o valor de -1 para a posição indicada.
+A partida termina quando ocorrer uma das seguintes situações:
+•	O jogador encontrar os 4 artefatos arqueológicos, vencendo a expedição.
+•	A energia do jogador chegar a zero ou menos, perdendo a expedição.
+•	O jogador explorar 12 posições sem encontrar os 4 artefatos, perdendo a expedição.
+Ao término da partida, o programa deverá informar se o jogador venceu ou perdeu a expedição, o número de artefatos encontrados e a energia resultante, voltando ao menu de opções.
+Na Opção 2 – Encerrar jogo, informar:
+•	quantidade de expedições vencidas;
+•	quantidade de expedições perdidas;
+•	quantidade total de artefatos encontrados em todas as partidas.
+O programa deverá obrigatoriamente utilizar subprogramas para:
+•	gerar o mapa da expedição;
+•	inicializar os dados da partida;
+•	explorar uma posição;
+•	verificar se uma posição já foi explorada;
+•	atualizar a energia do jogador;
+•	verificar se a expedição terminou;
+•	outros a critério do programador.
+ATENÇÃO:
+•	Utilize apenas vetores unidimensionais.
+•	Não utilize variáveis do tipo String.
+•	Não utilize coleções (ArrayList, LinkedList etc.).
+•	Não utilize orientação a objetos além da classe principal do programa.
+•	Considere que todas as entradas informadas pelo usuário são válidas, exceto a escolha de posições já exploradas, que deverá ser tratada conforme o enunciado.
