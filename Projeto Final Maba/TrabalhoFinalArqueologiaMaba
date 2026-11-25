@@ -2,24 +2,84 @@ import java.util.Scanner;
 
 public class TrabalhoFinalArqueologiaMaba {
 
-    private static void colocarElementos(int[] mapa, int valor, int quantidade) {
-    int colocados = 0;
-    while (colocados < quantidade) {
-        int posicao = (int) (Math.random() * mapa.length);
-        if (mapa[posicao] == 0) {
-            mapa[posicao] = valor;
-            colocados++;
+    // Dados da partida
+    static int energia = 20;
+    static int artefatos = 0;
+    static int exploracoes = 0;
+
+    // Dados gerais
+    static int vitorias = 0;
+    static int derrotas = 0;
+    static int totalArtefatos = 0;
+
+    private static void alterarEnergia(int quantidade) {
+        energia += quantidade;
+        if (energia > 30) {
+            energia = 30;
         }
     }
-}
+
+    private static void explorarPosicao(int[] mapa, int posicao) {
+        if (posicaoJaExplorada(mapa, posicao)) {
+            System.out.println("Posição já explorada!");
+            return;
+        }
+
+        switch (mapa[posicao]) {
+
+            case 1:
+                System.out.println("Você encontrou uma fonte de energia! Ganhou 5 de energia.");
+                alterarEnergia(5);
+                break;
+            case 2:
+                System.out.println("Você encontrou um artefato!");
+                artefatos++;
+                totalArtefatos++;
+                break;
+            case 3:
+                System.out.println("Você encontrou uma área de risco! Perdeu 4 de energia.");
+                alterarEnergia(-4);
+                break;
+            default:
+                System.out.println("Nada encontrado nesta posição.");
+                alterarEnergia(-1);
+                break;
+        }
+        mapa[posicao] = -1;
+        exploracoes++;
+    }
+
+    private static void inicializarPartida() {
+        energia = 20;
+        artefatos = 0;
+        exploracoes = 0;
+    }
+
+    private static boolean posicaoJaExplorada(int[] mapa, int posicao) {
+        if (mapa[posicao] == -1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private static void colocarElementos(int[] mapa, int valor, int quantidade) {
+        int colocados = 0;
+        while (colocados < quantidade) {
+            int posicao = (int) (Math.random() * mapa.length);
+            if (mapa[posicao] == 0) {
+                mapa[posicao] = valor;
+                colocados++;
+            }
+        }
+    }
 
     private static void gerarMapa(int[] mapa) {
-        colocarElementos(mapa, 1, 6); 
-        colocarElementos(mapa, 2, 4); 
-        colocarElementos(mapa, 3, 8); 
-        
-        }
-    
+        colocarElementos(mapa, 1, 6);
+        colocarElementos(mapa, 2, 4);
+        colocarElementos(mapa, 3, 8);
+
+    }
 
     private static void mostrarMapa(int[] mapa) {
         System.out.println("Mapa da expedição:");
@@ -28,8 +88,6 @@ public class TrabalhoFinalArqueologiaMaba {
         }
         System.out.println();
     }
-        
-    
 
     public static void main(String[] args) {
         Scanner tec = new Scanner(System.in);
@@ -46,6 +104,11 @@ public class TrabalhoFinalArqueologiaMaba {
                     int[] mapa = new int[30];
                     gerarMapa(mapa);
                     mostrarMapa(mapa);
+                    inicializarPartida();
+                    explorarPosicao(mapa, 0);
+                    System.out.println("Energia: " + energia);
+                    System.out.println("Artefatos: " + artefatos);
+                    System.out.println("Exploracoes: " + exploracoes);
                     break;
                 case 2:
                     System.out.println("Jogo encerrado!");
