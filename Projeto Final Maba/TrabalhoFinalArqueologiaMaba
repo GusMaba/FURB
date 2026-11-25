@@ -12,6 +12,14 @@ public class TrabalhoFinalArqueologiaMaba {
     static int derrotas = 0;
     static int totalArtefatos = 0;
 
+    private static boolean verificarFim() {
+    if (energia <= 0 || artefatos >= 4 || exploracoes >= 12) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
     private static void alterarEnergia(int quantidade) {
         energia += quantidade;
         if (energia > 30) {
@@ -105,10 +113,22 @@ public class TrabalhoFinalArqueologiaMaba {
                     gerarMapa(mapa);
                     mostrarMapa(mapa);
                     inicializarPartida();
-                    explorarPosicao(mapa, 0);
-                    System.out.println("Energia: " + energia);
-                    System.out.println("Artefatos: " + artefatos);
-                    System.out.println("Exploracoes: " + exploracoes);
+                    while (!verificarFim()) {
+                        
+                        System.out.println("Escolha uma posição para explorar (0 a 29):");
+                        int posicao = tec.nextInt();
+                        if (posicao < 0 || posicao >= mapa.length) {
+                            System.out.println("Posição inválida! Tente novamente.");
+                            continue;
+                        }
+                        
+                        explorarPosicao(mapa, posicao);
+                        mostrarMapa(mapa);
+                        System.out.println("Energia: " + energia);
+                        System.out.println("Artefatos: " + artefatos);
+                        System.out.println("Explorações: " + exploracoes);
+                    }
+                    System.out.println("Fim da expedição!");
                     break;
                 case 2:
                     System.out.println("Jogo encerrado!");
