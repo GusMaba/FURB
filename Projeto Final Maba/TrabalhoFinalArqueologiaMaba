@@ -18,12 +18,37 @@ public class TrabalhoFinalArqueologiaMaba {
     } else {
         return false;
     }
+
 }
+
+ private static void mostrarResultado() {
+        if (energia <= 0) {
+            System.out.println("Você perdeu! Sua energia acabou.");
+            derrotas++;
+        } else if (artefatos >= 4) {
+            System.out.println("Parabéns! Você encontrou todos os artefatos!");
+            vitorias++;
+        } else if (exploracoes >= 12) {
+            System.out.println("Você perdeu! Você não encontrou todos os artefatos.");
+            derrotas++;
+        }
+    }
+
+    private static void mostrarEstatisticas() {
+        System.out.println("Estatísticas do jogo:");
+        System.out.println("Vitórias: " + vitorias);
+        System.out.println("Derrotas: " + derrotas);
+        System.out.println("Total de artefatos encontrados: " + totalArtefatos);
+    } 
+        
+        
 
     private static void alterarEnergia(int quantidade) {
         energia += quantidade;
         if (energia > 30) {
             energia = 30;
+        } else if (energia < 0) {
+            energia = 0;
         }
     }
 
@@ -129,9 +154,11 @@ public class TrabalhoFinalArqueologiaMaba {
                         System.out.println("Explorações: " + exploracoes);
                     }
                     System.out.println("Fim da expedição!");
+                    mostrarResultado();
                     break;
                 case 2:
                     System.out.println("Jogo encerrado!");
+                    mostrarEstatisticas();
                     break;
             }
         }
