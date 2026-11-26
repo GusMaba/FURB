@@ -12,7 +12,7 @@ public class TrabalhoFinalArqueologiaMaba {
     static int derrotas = 0;
     static int totalArtefatos = 0;
 
-    private static boolean verificarFim() {
+    private static boolean verificarFim() { // Verifica se a partida terminou e como
         if (energia <= 0 || artefatos >= 4 || exploracoes >= 12) {
             return true;
         } else {
@@ -21,7 +21,7 @@ public class TrabalhoFinalArqueologiaMaba {
 
     }
 
-    private static void mostrarResultado() {
+    private static void mostrarResultado() { //mostra o resultado da partida, o motivo do resultado e atualiza as estatísticas
         if (energia <= 0) {
             System.out.println("Você perdeu! Sua energia acabou.");
             derrotas++;
@@ -34,14 +34,14 @@ public class TrabalhoFinalArqueologiaMaba {
         }
     }
 
-    private static void mostrarEstatisticas() {
+    private static void mostrarEstatisticas() { //mostra as estatísticas finais do jogo
         System.out.println("Estatísticas do jogo:");
         System.out.println("Vitórias: " + vitorias);
         System.out.println("Derrotas: " + derrotas);
         System.out.println("Total de artefatos encontrados: " + totalArtefatos);
     }
 
-    private static void alterarEnergia(int quantidade) {
+    private static void alterarEnergia(int quantidade) { // Muda a quantidade de energia do jogado mantendo o limite de 30 e não indo abaixo de 0
         energia += quantidade;
         if (energia > 30) {
             energia = 30;
@@ -50,7 +50,7 @@ public class TrabalhoFinalArqueologiaMaba {
         }
     }
 
-    private static void explorarPosicao(int[] mapa, int posicao) {
+    private static void explorarPosicao(int[] mapa, int posicao) { //Explora a posição escolhida e atualiza os dados da partida de acordo com cada caso
         if (posicaoJaExplorada(mapa, posicao)) {
             System.out.println("Posição já explorada!");
             return;
@@ -80,13 +80,13 @@ public class TrabalhoFinalArqueologiaMaba {
         exploracoes++;
     }
 
-    private static void inicializarPartida() {
+    private static void inicializarPartida() { // Reinicia os dados a cada nova partida iniciada
         energia = 20;
         artefatos = 0;
         exploracoes = 0;
     }
 
-    private static boolean posicaoJaExplorada(int[] mapa, int posicao) {
+    private static boolean posicaoJaExplorada(int[] mapa, int posicao) { // Verifica se a posição já foi explorada 
         if (mapa[posicao] == -1) {
             return true;
         } else {
@@ -94,7 +94,7 @@ public class TrabalhoFinalArqueologiaMaba {
         }
     }
 
-    private static void colocarElementos(int[] mapa, int valor, int quantidade) {
+    private static void colocarElementos(int[] mapa, int valor, int quantidade) { // Distribui os elementos no mapa de forma aleatória, garantindo que não haja sobreposição
         int colocados = 0;
         while (colocados < quantidade) {
             int posicao = (int) (Math.random() * mapa.length);
@@ -105,17 +105,17 @@ public class TrabalhoFinalArqueologiaMaba {
         }
     }
 
-    private static void gerarMapa(int[] mapa) {
+    private static void gerarMapa(int[] mapa) { // Gera o mapa da expedição, chamando a função colocarElementos para cada tipo de elemento
         colocarElementos(mapa, 1, 6);
         colocarElementos(mapa, 2, 4);
         colocarElementos(mapa, 3, 8);
 
     }
 
-    private static void mostrarMapa(int[] mapa) {
+    private static void mostrarMapa(int[] mapa) { // Mostra o mapa gerado e coloca tudo como "X" para não revelar os elementos
         System.out.println("Mapa da expedição:");
         for (int i = 0; i < mapa.length; i++) {
-            System.out.print(mapa[i] + " ");
+            System.out.print("X" + " ");
         }
         System.out.println();
     }
@@ -136,6 +136,9 @@ public class TrabalhoFinalArqueologiaMaba {
                     gerarMapa(mapa);
                     mostrarMapa(mapa);
                     inicializarPartida();
+                    System.out.println("Energia: " + energia);
+                    System.out.println("Artefatos: " + artefatos);
+                    System.out.println("Explorações: " + exploracoes);
                     while (!verificarFim()) {
 
                         System.out.println("Escolha uma posição para explorar (0 a 29):");
@@ -146,6 +149,9 @@ public class TrabalhoFinalArqueologiaMaba {
                         }
                         explorarPosicao(mapa, posicao);
                         mostrarMapa(mapa);
+                        System.out.println("Energia: " + energia);
+                        System.out.println("Artefatos: " + artefatos);
+                        System.out.println("Explorações: " + exploracoes);
                     }
                     System.out.println("Fim da expedição!");
                     mostrarResultado();
